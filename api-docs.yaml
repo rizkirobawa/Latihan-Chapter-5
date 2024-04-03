@@ -1,0 +1,147 @@
+openapi: 3.0.1
+info:
+  title: Instagram API
+  description: api mirip-mirip Instagram
+  version: 1.0.0
+  contact:
+    email: rizkirobawa@gmail.com
+servers:
+  - url: http://localhost:3000/v1
+  - url: https://instagram.like/v1
+paths:
+  /users:
+    post:
+      summary: register new user
+      description: mendaftarkan user baru kedalam sistem.
+      requestBody:
+        $ref: '#/components/requestBodies/Register'
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/User"
+                  - type: object
+                    properties:
+                      password:
+                        type: string
+                        example: 98764927
+        400:
+          description: Duplicated email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: email already used!
+      security:
+        - bearerAuth: []
+    get:
+      summary: Get All User
+      parameters:
+      - schema:
+          type: string
+        name: search
+        in: query
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/User'
+                        - type: object
+                          properties:
+                            password:
+                              type: string
+                              example: agung123
+  /users/{id}:                         
+    get:
+      summary: get detail user
+      parameters:
+        - schema:
+            type: integer
+          name: user_id
+          in: path
+          required: true
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    allOf:
+                      - $ref: '#/components/schemas/User'
+                      - type: object
+                        properties:
+                          password:
+                            type: string
+                            example: agung123
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 11
+        name:
+          type: string
+          example: agung
+        email:
+          type: string
+          example: agung@mail.com
+        # password:
+        #   type: string
+        #   example: agung123
+  requestBodies:
+    Register:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: agung
+              email:
+                type: string
+                example: agung@mail.com
+              password:
+                type: string
+                example: agung123

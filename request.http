@@ -1,0 +1,29 @@
+POST http://localhost:3000/v1/users
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "email": "abc@gmail.com",
+    "password": "abc"
+}
+
+
+###
+GET http://localhost:3000/v1/users
+###
+GET http://localhost:3000/v1/users?search=wa
+
+###
+POST http://localhost:3000/v1/users/2/follow
+user_id: 1
+
+###
+POST http://localhost:3000/v1/users
+Authorization: Bearer abc
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}

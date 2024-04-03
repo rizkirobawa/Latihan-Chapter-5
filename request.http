@@ -23,7 +23,7 @@ Authorization: Bearer abc
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "john@example.com",
+  "name": "bagos aso",
+  "email": "bagoesnjing@example.com",
   "password": "password123"
 }
